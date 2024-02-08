@@ -49,44 +49,54 @@ class _CounterFunctionsScreenState extends State<CounterFunctionsScreen> {
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            FloatingActionButton(
-              shape: const StadiumBorder(),
-              onPressed: () {
-                setState(() {
-                  clickCounter = 0;
-                });
-              },
-              child: const Icon(Icons.restart_alt_outlined),
+            CustomButton(
+              icon: Icons.refresh_rounded,
+              onPressed: () => setState(() {
+                clickCounter = 0;
+              }),
             ),
 
             const SizedBox(
               height: 10,
             ),
 
-            FloatingActionButton(
-              shape: const StadiumBorder(), //funcion para redondear los botones
-              onPressed: () {
-                //El setState es una funcion que renderiza en tiempo real la pantalla
-                setState(() {
-                  clickCounter++;
-                });
-              },
-              child: const Icon(Icons.plus_one),
+            CustomButton(
+              icon: Icons.plus_one,
+              onPressed: () => setState(() {
+                clickCounter++;
+              }),
             ),
             const SizedBox(
               height: 10,
             ), //Funcion para añadir un espacio entre los botones
-            FloatingActionButton(
-              shape: const StadiumBorder(), //funcion para redondear los botones
-              onPressed: () {
-                //El setState es una funcion que renderiza en tiempo real la pantalla
-                setState(() {
-                  clickCounter--;
-                });
-              },
-              child: const Icon(Icons.exposure_minus_1),
+            CustomButton(
+              icon: Icons.exposure_minus_1,
+              onPressed: () => setState(() {
+                if (clickCounter == 0) return;
+                clickCounter--;
+              }),
             ),
           ],
         ));
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback? onPressed;
+
+  const CustomButton({
+    super.key,
+    required this.icon,
+    this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      shape: const StadiumBorder(), //funcion para redondear los botones
+      onPressed: onPressed,
+      child: Icon(icon),
+    );
   }
 }
