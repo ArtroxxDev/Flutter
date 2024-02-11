@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:yes_no_app/domain/entities/messages.dart';
 
 class HerMessageBubble extends StatelessWidget {
-  const HerMessageBubble({super.key});
+  final Message message;
+  const HerMessageBubble({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           decoration: BoxDecoration(
               color: colors.secondary, borderRadius: BorderRadius.circular(20)),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Text(
-              'Mati, te amo, eres mejor que Rudy',
-              style: TextStyle(color: Colors.white),
+              message.text,
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         ),
@@ -24,9 +27,9 @@ class HerMessageBubble extends StatelessWidget {
           height: 5,
         ),
 
-        _ImageBubble(),
+        _ImageBubble(message.imageUrl ?? ''),
 
-        SizedBox(
+        const SizedBox(
           height: 10,
         )
         //Todo: imagen
@@ -36,7 +39,8 @@ class HerMessageBubble extends StatelessWidget {
 }
 
 class _ImageBubble extends StatelessWidget {
-  const _ImageBubble({super.key});
+  final String imageUrl;
+  const _ImageBubble(this.imageUrl);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +48,7 @@ class _ImageBubble extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Image.network(
-        'https://64.media.tumblr.com/fdd653403c26761d51ca433434dcf0f2/02d7289e9766e547-78/s540x810/73b07946be85823634a2a923cad9cae0f5f70259.gif',
+        imageUrl,
         width: size.width * 0.7,
         height: 150,
         fit: BoxFit.cover,
